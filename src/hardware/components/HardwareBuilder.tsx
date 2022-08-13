@@ -2,16 +2,16 @@ import React from 'React';
 import InstanceSelect from './InstanceSelect';
 import ProviderSelect from './ProviderSelect';
 import { Box, Button, Grid, Table, TableHead, TableRow, TableBody, Typography, TableCell, TextField, styled, TextFieldProps, IconButton } from '@mui/material';
-import { Field, FieldArrayRenderProps } from 'formik';
-import { Instance } from '../Instance';
+import { FieldArrayRenderProps } from 'formik';
+import { Instance } from '../../schema';
 import { Nullable } from '../../types/Nullable';
 import { Close } from '@mui/icons-material';
 
 const defaultHardware: Nullable<Instance> = {
   provider: null,
   instance: null,
-  cpu: null,
-  memory: null
+  cpu: 0,
+  memory: 0
 }
 
 const ReadOnlyTextField = styled(TextField)({
@@ -31,7 +31,7 @@ const ReadOnlyField = (props: TextFieldProps) => (
 );
 
 const HardwareBuilder = ({ name, push, replace, remove, form }: FieldArrayRenderProps) => {
-  const values: Instance[] = form.values.hardware;
+  const values: Instance[] = form.values[name];
   return (
     <Box>
       <Grid container spacing={2}>
@@ -62,12 +62,20 @@ const HardwareBuilder = ({ name, push, replace, remove, form }: FieldArrayRender
         </TableHead>
         <TableBody>
           {values.map((value, ix) => {
-            const { provider, instance, cpu, memory } = values[ix];
+            const { provider, instance, cpu, memory } = value;
+
+            // formik array helpers + material is significant work to compose.
+            // I'm opting not to use formik Field components here at the cost of auto-wiring state
+            const errors = form.errors.hardware ? (form.errors.hardware as any)[ix] : {};
+            const touched = form.touched.hardware ? (form.touched.hardware as any)[ix] : {};
+
             return (
               <TableRow key={ix}>
                 <TableCell>
                   <ProviderSelect
                     value={provider}
+                    error={touched?.provider && Boolean(errors?.provider)}
+                    onBlur={() => form.setFieldTouched(`${name}.${ix}.provider`, true)}
                     onChange={(event: React.SyntheticEvent, provider: string) => {
                       replace(ix, { ...defaultHardware, provider });
                     }}
@@ -78,16 +86,18 @@ const HardwareBuilder = ({ name, push, replace, remove, form }: FieldArrayRender
                     value={values[ix]}
                     provider={provider}
                     disabled={!provider}
+                    error={touched?.instance && Boolean(errors?.instance)}
+                    onBlur={() => form.setFieldTouched(`${name}.${ix}.instance`, true)}
                     onChange={(event: React.SyntheticEvent, instance: Instance) => {
                       replace(ix, { ...instance, provider });
                     }}
                   />
                 </TableCell>
                 <TableCell>
-                  <ReadOnlyField value={value?.cpu || ''} />
+                  <ReadOnlyField value={cpu} disabled={!cpu} />
                 </TableCell>
                 <TableCell>
-                  <ReadOnlyField value={value?.memory || ''} />
+                  <ReadOnlyField value={memory} disabled={!memory} />
                 </TableCell>
                 <TableCell>
                   <IconButton onClick={() => remove(ix)}>

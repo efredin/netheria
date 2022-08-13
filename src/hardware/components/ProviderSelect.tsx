@@ -4,10 +4,12 @@ import { useProviders } from '../hooks';
 
 export interface ProviderSelectProps {
   value: string | null;
+  error?: boolean;
+  onBlur?: (event: React.SyntheticEvent) => void;
   onChange: (event: React.SyntheticEvent, value: string | null) => void;
 }
 
-const ProviderSelect = (props: ProviderSelectProps) => {
+const ProviderSelect = ({ error, onBlur, ...props }: ProviderSelectProps) => {
   const { data, isLoading } = useProviders();
 
   const providers = data || [];
@@ -18,7 +20,8 @@ const ProviderSelect = (props: ProviderSelectProps) => {
       loading={isLoading}
       options={providers}
       getOptionLabel={option => option}
-      renderInput={(params) => <TextField {...params} placeholder="Select Provider" /> }
+      onBlur={onBlur}
+      renderInput={(params) => <TextField error={error} {...params} placeholder="Select Provider" /> }
     />
   );
 };

@@ -1,16 +1,18 @@
 import React from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { useHardware } from '../hooks';
-import { Instance } from '../Instance';
+import { Instance } from '../../schema';
 
 export interface InstanceSelectProps {
   provider?: string;
   value: Instance;
   disabled?: boolean;
+  error?: boolean;
+  onBlur?: (event: React.SyntheticEvent) => void;
   onChange: (event: React.SyntheticEvent, value: Instance | null) => void;
 }
 
-const InstanceSelect = (props: InstanceSelectProps) => {
+const InstanceSelect = ({ error, onBlur, ...props }: InstanceSelectProps) => {
   const { provider, ...renderProps } = props;
   const { data, isLoading } = useHardware(provider);
 
@@ -23,7 +25,8 @@ const InstanceSelect = (props: InstanceSelectProps) => {
       options={hardware}
       getOptionLabel={option => option?.instance || ''}
       isOptionEqualToValue={(option, value) => value.provider === option.provider && value.instance === option.instance}
-      renderInput={(params) => <TextField {...params} placeholder="Select Instance" /> }
+      onBlur={onBlur}
+      renderInput={(params) => <TextField {...params} error={error} placeholder="Select Instance" /> }
     />
   );
 };
