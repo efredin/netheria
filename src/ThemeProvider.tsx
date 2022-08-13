@@ -10,13 +10,7 @@ const LinkBehavior = React.forwardRef<any, Omit<LinkProps, 'to'> & { href: LinkP
 
 const theme = createTheme({
   palette: {
-    mode: 'light',
-    primary: {
-      main: green[700]
-    },
-    secondary: {
-      main: grey[50]
-    }
+    mode: 'light'
   },
   components: {
     MuiLink: {
@@ -27,17 +21,6 @@ const theme = createTheme({
     MuiButtonBase: {
       defaultProps: {
         LinkComponent: LinkBehavior
-      }
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: (props: any) => ({
-          position: 'relative',
-          transform: 'none',
-          marginBottom: props.theme.spacing(0.5),
-          fontSize: props.theme.typography.fontSize + 1,
-          fontWeight: 700
-        })
       }
     }
   }

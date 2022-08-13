@@ -1,21 +1,27 @@
 import React from 'react';
 import { CssBaseline } from '@mui/material';
-import { BrowserRouter, useRoutes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ThemeProvider from './ThemeProvider';
+import Home from './Home';
+import Octomize from './Octomize';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-const RoutedApp = () => (
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-);
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <CssBaseline />
-      <div>Hellow world</div>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="octomize" element={<Octomize />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 
-export default RoutedApp;
+export default App;

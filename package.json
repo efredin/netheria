@@ -17,6 +17,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@parcel/transformer-yaml": "2.7.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
@@ -37,12 +38,15 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.0",
     "es6-shim": "^0.35.6",
+    "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.2",
     "react-router-dom": "^6.3.0",
     "serve": "^14.0.1",
     "yarn": "^1.22.19",
-    "zod": "^3.18.0"
+    "zod": "^3.18.0",
+    "zod-formik-adapter": "^1.1.1"
   },
   "eslintConfig": {
     "extends": [
