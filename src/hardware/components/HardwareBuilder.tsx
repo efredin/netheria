@@ -3,11 +3,11 @@ import InstanceSelect from './InstanceSelect';
 import ProviderSelect from './ProviderSelect';
 import { Box, Button, Grid, Table, TableHead, TableRow, TableBody, Typography, TableCell, TextField, styled, TextFieldProps, IconButton } from '@mui/material';
 import { FieldArrayRenderProps } from 'formik';
-import { Instance } from '../../schema';
+import { Instance } from '../../hardware';
 import { Nullable } from '../../types/Nullable';
 import { Close } from '@mui/icons-material';
 
-const defaultHardware: Nullable<Instance> = {
+export const defaultHardware: Nullable<Instance> = {
   provider: null,
   instance: null,
   cpu: 0,
@@ -53,11 +53,11 @@ const HardwareBuilder = ({ name, push, replace, remove, form }: FieldArrayRender
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Provider</TableCell>
-            <TableCell>Instance</TableCell>
+            <TableCell sx={{ width: '30%', color: '#0180FF' }}>PROVIDER</TableCell>
+            <TableCell sx={{ width: '30%' }}>INSTANCE</TableCell>
             <TableCell>VCPU</TableCell>
-            <TableCell>Memory (Gib)</TableCell>
-            <TableCell></TableCell>
+            <TableCell>MEMORY (GIB)</TableCell>
+            <TableCell sx={{ width: '40px' }}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

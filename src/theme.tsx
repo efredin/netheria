@@ -12,6 +12,9 @@ const theme = createTheme({
   palette: {
     mode: 'light'
   },
+  typography: {
+    fontFamily: 'Inter'
+  },
   components: {
     MuiLink: {
       defaultProps: {
@@ -26,10 +29,8 @@ const theme = createTheme({
   }
 } as any);
 
-const ThemeProvider = ({ children }: React.PropsWithChildren<unknown>) => (
+export const ThemeProvider = ({ children }: React.PropsWithChildren<unknown>) => (
   <MuiThemeProvider theme={theme}>
     {children}
   </MuiThemeProvider>
 );
-
-export default ThemeProvider;
