@@ -27,6 +27,5 @@ yarn serve
 * Code coverage is almost non-existent.  I've created a one test suite as an example, but figured time was better spend completing the demo.
 
 ## Known issues
-* Invalid autocomplete option where the default is not valid, but I didn't want to prepend a blank value.
+* Invalid autocomplete option where the default is not valid, but I didn't want to prepend a blank value.  This generates a few console warnings, and an error about uncontrolled form state.
 * Side nav is not anchored when screen scrolls.
-
