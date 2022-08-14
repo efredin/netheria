@@ -11,6 +11,9 @@ const LinkBehavior = React.forwardRef<any, Omit<LinkProps, 'to'> & { href: LinkP
 const theme = createTheme({
   palette: {
     mode: 'light',
+    primary: {
+      main: '#0180FF'
+    },
     background: {
       default: '#f9f9f9'
     }
