@@ -146,10 +146,10 @@ const OctomizePage = () => {
                       {runItems.map(({ instance, cpu, runs }, ix) => (
                         <Fragment key={ix}>
                           <Grid item xs={10}>
-                            <Typography variant="body2">
+                            <Typography variant="body2" sx={{ fontWeight: 700 }}>
                               {instance}
                             </Typography>
-                            <Typography variant="caption">
+                            <Typography variant="caption" component="p" sx={{ fontWeight: 500, color: '#91969C', mb: 2 }}>
                               {cpu} cores
                             </Typography>
                           </Grid>
