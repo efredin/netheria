@@ -1,5 +1,3 @@
-import OctomizePage from './OctomizePage';
-
-export {
-  OctomizePage
-};
+export * from './components';
+export * from './hooks';
+export * from './schema';

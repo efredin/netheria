@@ -1,6 +1,6 @@
 import React from 'react';
 import { Autocomplete, TextField } from '@mui/material';
-import { useProviders } from '../hooks';
+import { useProviders } from '..';
 
 export interface ProviderSelectProps {
   value: string | null;

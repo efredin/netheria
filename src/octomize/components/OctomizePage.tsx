@@ -1,18 +1,22 @@
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import React, { useState } from 'React';
-import { Page } from '../layout';
-import { Octomize, octomizeSchema } from './schema';
-import { defaultHardware, HardwareBuilder, Instance } from '../hardware';
-import { Formik, Form, FieldArray } from 'formik';
+import { Page } from '../../layout';
+import { Octomize, octomizeSchema } from '..';
+import { defaultHardware, defaultBenchmark, HardwareBuilder, BenchmarkBuilder } from '.';
+import { Formik, Form, FieldArray, Field } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
-import { DeepNullable } from '../types/Nullable';
+import { DeepNullable } from '../../types/Nullable';
 
 const initialValues: DeepNullable<Octomize> = {
-  hardware: [{ ...defaultHardware }]
+  hardware: [{ ...defaultHardware }],
+  // benchmark: {
+  //   // engine: Engine.TVM,
+  //   num_trials: 1,
+  //   runs_per_trial: 1
+  // },
+  // accelerate: { engine: Engine.TVM } // todo
 };
-
-const validationSchema = toFormikValidationSchema(octomizeSchema);
 
 const OctomizePage = () => {
   const [totalRuns, setTotalRuns] = useState(0);
@@ -22,7 +26,7 @@ const OctomizePage = () => {
     <Page>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={octomizeSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
             setSubmitting(true);
@@ -40,7 +44,8 @@ const OctomizePage = () => {
                   Octomize
                 </Typography>
                 <Box component={Form}>
-                  <FieldArray name="hardware" component={HardwareBuilder} />
+                  <BenchmarkBuilder />
+                  <HardwareBuilder />
                 </Box>
               </Paper>
             </Grid>

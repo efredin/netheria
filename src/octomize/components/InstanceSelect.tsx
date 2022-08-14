@@ -1,7 +1,6 @@
 import React from 'react';
 import { Autocomplete, TextField } from '@mui/material';
-import { useHardware } from '../hooks';
-import { Instance } from '../';
+import { useHardware, Instance } from '..';
 
 export interface InstanceSelectProps {
   provider?: string;
