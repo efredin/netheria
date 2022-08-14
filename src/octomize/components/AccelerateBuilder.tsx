@@ -4,14 +4,18 @@ import React, { Fragment, useState } from 'react';
 import { OptionalFieldGroup } from '../../layout';
 import { Engine } from '../schema';
 
-const AccelerateBuilder = () => {
-  const [enabled, setEnabled] = useState(true);
+export interface AccelerateBuilderProps {
+  enabled: boolean;
+  onEnabledChange: (event: React.SyntheticEvent, enabled: boolean) => void;
+}
+
+const AccelerateBuilder = ({ enabled, onEnabledChange }: AccelerateBuilderProps) => {
   const [expanded, setExpanded] = useState(false);
 
   // allow expand/collapse without toggling, but auto toggle when enabled changes
   const handleEnabledChange = (event: React.SyntheticEvent, value: boolean) => {
-    setEnabled(value);
     setExpanded(value);
+    onEnabledChange(event, value);
   };
 
   const handleExpandedChange = (event: React.SyntheticEvent, value: boolean) => {

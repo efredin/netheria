@@ -4,14 +4,18 @@ import React, { Fragment, useState } from 'react';
 import { OptionalFieldGroup } from '../../layout';
 import { Engine } from '../schema';
 
-const BenchmarkBuilder = () => {
-  const [enabled, setEnabled] = useState(true);
+export interface BenchmarkBuilderProps {
+  enabled: boolean;
+  onEnabledChange: (event: React.SyntheticEvent, enabled: boolean) => void;
+}
+
+const BenchmarkBuilder = ({ enabled, onEnabledChange }: BenchmarkBuilderProps) => {
   const [expanded, setExpanded] = useState(false);
 
   // allow expand/collapse without toggling, but auto toggle when enabled changes
   const handleEnabledChange = (event: React.SyntheticEvent, value: boolean) => {
-    setEnabled(value);
     setExpanded(value);
+    onEnabledChange(event, value);
   };
 
   const handleExpandedChange = (event: React.SyntheticEvent, value: boolean) => {
@@ -34,7 +38,7 @@ const BenchmarkBuilder = () => {
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Field name="benchmark.engine">
-            {({ field, meta }) => (
+            {({ field, meta, form }) => (
               <FormControl
                 fullWidth
                 error={meta.touched && (Boolean(meta.error))}

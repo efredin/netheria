@@ -29,7 +29,7 @@ export const octomizeSchema = object({
       'unique',
       'Duplicate hardware detected',
       value => !value || value.length === uniqWith(value, (a, b) => a.provider === b.provider && a.instance === b.instance ).length
-    ),
+    ).required(),
   benchmark: benchmarkSchema.optional(),
   accelerate: accelerateSchema.optional()
 });
