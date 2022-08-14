@@ -33,6 +33,7 @@ const HardwareBuilder = () => {
     <FieldArray
       name="hardware"
       render={({ push, replace, remove, form }) => {
+        const { errors } = form;
         const values: Instance[] = form.values.hardware;
         return (
           <Box>
@@ -64,8 +65,12 @@ const HardwareBuilder = () => {
               </TableHead>
               <TableBody>
                 <TableRow>
-                  {/* Spacer row */}
-                  <TableCell colSpan={5} sx={{ border: 0, fontSize: 8 }}>&nbsp;</TableCell>
+                  {/* Spacer / error message row */}
+                  <TableCell colSpan={5} sx={{ border: 0, height: 22 }}>
+                    {typeof errors.hardware === 'string' ? <Typography variant="body2" color="error.main">
+                      {errors.hardware}
+                    </Typography> : <>&nbsp;</>}
+                  </TableCell>
                 </TableRow>
                 {values.map((value, ix) => {
                   const { provider, instance, cpu, memory } = value;

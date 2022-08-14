@@ -7,7 +7,11 @@ import { Engine } from '../schema';
 import { defaultHardware, HardwareBuilder, BenchmarkBuilder, AccelerateBuilder } from '.';
 import { Formik, Form } from 'formik';
 
-const initialValues: Octomize = {
+interface OctomizeFormValues extends Octomize {
+  job?: unknown; // allows for custom form level validation
+}
+
+const initialValues: OctomizeFormValues = {
   hardware: [{ ...defaultHardware as any }],
   benchmark: {
     engine: Engine.TVM,
@@ -27,7 +31,7 @@ interface RunItem {
 
 const OctomizePage = () => {
   const [benchmarkEnabled, setBenchmarkEnabled] = useState(true);
-  const [accelerateEnabled, setaccelerateEnabled] = useState(true);
+  const [accelerateEnabled, setAccelerateEnabled] = useState(true);
   const [job, setJob] = useState<OctomizeJob | null>(null);
   const submitJobMutation = useSubmitJob();
 
@@ -36,16 +40,30 @@ const OctomizePage = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={octomizeSchema}
-        onSubmit={async (values, { setSubmitting }) => {
+        validate={() => {
+          const errors: any = {};
+          if (!benchmarkEnabled && !accelerateEnabled) {
+            errors.job = 'At least one benchmark or accelerate job is required.'
+          }
+          return errors;
+        }}
+        onSubmit={async ({ hardware, benchmark, accelerate }, { setSubmitting }) => {
           try {
-            const job = await submitJobMutation.mutateAsync(values);
+            // ignore disabled jobs
+            const jobConfig: Octomize = {
+              hardware,
+              benchmark: benchmarkEnabled ? benchmark : undefined,
+              accelerate: accelerateEnabled ? accelerate : undefined
+            };
+
+            const job = await submitJobMutation.mutateAsync(jobConfig);
             setJob(job);
           } finally {
             setSubmitting(false);
           }
         }}
       >
-        {({ isSubmitting, isValid, dirty, values, resetForm }) => {
+        {({ isSubmitting, isValid, dirty, values, errors, resetForm, validateForm }) => {
           const { hardware, benchmark, accelerate } = values;
           const [totalRuns, setTotalRuns] = useState(0);
           const [runItems, setRunItems] = useState<RunItem[]>([]);
@@ -56,6 +74,7 @@ const OctomizePage = () => {
           };
 
           useEffect(() => {
+            // compute run summary
             let total = 0;
             const items: RunItem[] = [];
             for (const { instance, cpu } of hardware) {
@@ -78,6 +97,11 @@ const OctomizePage = () => {
             setRunItems(items);
           }, [values, benchmarkEnabled, accelerateEnabled])
 
+          useEffect(() => {
+            // trigger form validation when enabled jobs change
+            validateForm();
+          }, [benchmarkEnabled, accelerateEnabled]);
+
           return (
             <Box component={Form}>
               <Box sx={{ color: '#555B62', my: 6 }}>
@@ -94,17 +118,18 @@ const OctomizePage = () => {
                     <Typography variant="h3" gutterBottom sx={{ color: '#7B818A', fontSize: 30 }}>
                       Octomize
                     </Typography>
-                    <Box>
-                      <BenchmarkBuilder
-                        enabled={benchmarkEnabled}
-                        onEnabledChange={(event, enabled) => setBenchmarkEnabled(enabled)}
-                      />
-                      <AccelerateBuilder
-                        enabled={accelerateEnabled}
-                        onEnabledChange={(event, enabled) => setaccelerateEnabled(enabled)}
-                      />
-                      <HardwareBuilder />
-                    </Box>
+                    {!isValid && errors.job && <Typography variant="body2" color="error.main">
+                      {errors.job}
+                    </Typography>}
+                    <BenchmarkBuilder
+                      enabled={benchmarkEnabled}
+                      onEnabledChange={(event, enabled) => setBenchmarkEnabled(enabled)}
+                    />
+                    <AccelerateBuilder
+                      enabled={accelerateEnabled}
+                      onEnabledChange={(event, enabled) => setAccelerateEnabled(enabled)}
+                    />
+                    <HardwareBuilder />
                   </Paper>
                 </Grid>
                 <Grid item xs={3}>

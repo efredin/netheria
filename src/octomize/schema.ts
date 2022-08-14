@@ -32,7 +32,11 @@ export const octomizeSchema = object({
     ).required(),
   benchmark: benchmarkSchema.optional(),
   accelerate: accelerateSchema.optional()
-});
+}).test(
+  'minJobs',
+  'At least one benchmark or accelerate job is required.',
+  value => !!value.accelerate || !!value.benchmark
+);
 
 export type Instance = InferType<typeof instanceSchema>;
 export type Benchmark = InferType<typeof benchmarkSchema>;
