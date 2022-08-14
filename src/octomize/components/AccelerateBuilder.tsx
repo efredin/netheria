@@ -1,10 +1,10 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { Field } from 'formik';
 import React, { Fragment, useState } from 'react';
 import { OptionalFieldGroup } from '../../layout';
 import { Engine } from '../schema';
 
-const BenchmarkBuilder = () => {
+const AccelerateBuilder = () => {
   const [enabled, setEnabled] = useState(true);
   const [expanded, setExpanded] = useState(false);
 
@@ -22,8 +22,8 @@ const BenchmarkBuilder = () => {
     <OptionalFieldGroup
       label={
         <Fragment>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>Benchmark</Typography>
-          <Typography variant="body2">Benchmark your model description.</Typography>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>Accelerate</Typography>
+          <Typography variant="body2">Accelerate your model description.</Typography>
         </Fragment>
       }
       enabled={enabled}
@@ -33,14 +33,14 @@ const BenchmarkBuilder = () => {
     >
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Field name="benchmark.engine">
+          <Field name="accelerate.engine">
             {({ field, meta }) => (
               <FormControl
                 fullWidth
                 error={meta.touched && (Boolean(meta.error))}
               >
-                <InputLabel id="benchmark-engine">Engine</InputLabel>
-                <Select {...field} label="Engine" labelId="benchmark-engine" size="small">
+                <InputLabel id="accelerate-engine">Engine</InputLabel>
+                <Select {...field} label="Engine" labelId="accelerate-engine" size="small">
                   {Object.values(Engine).map(engine => (
                     <MenuItem key={engine} value={engine}>{engine}</MenuItem>
                   ))}
@@ -49,38 +49,9 @@ const BenchmarkBuilder = () => {
             )}
           </Field>
         </Grid>
-        <Grid item xs={2}>
-          <Field name="benchmark.num_trials">
-            {({ field, meta }) => (
-              <TextField
-                fullWidth
-                label="Trials"
-                type="number"
-                size="small"
-                error={meta.touched && (Boolean(meta.error))}
-                {...field}
-              />
-            )}
-          </Field>
-        </Grid>
-        <Grid item xs={2}>
-          <Field name="benchmark.runs_per_trial">
-            {({ field, meta }) => (
-              <TextField
-                fullWidth
-                label="Runs per Trial"
-                type="number"
-                size="small"
-                error={meta.touched && (Boolean(meta.error))}
-                {...field}
-              />
-            )}
-          </Field>
-        </Grid>
       </Grid>
-        
     </OptionalFieldGroup>
   );
 };
 
-export default BenchmarkBuilder;
+export default AccelerateBuilder;

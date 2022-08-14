@@ -38,7 +38,7 @@ const HardwareBuilder = () => {
           <Box>
             <Grid container spacing={2} sx={{ mt: 8 }}>
               <Grid item xs={10}>
-                <Typography variant="h6" color="gray" sx={{ fontSize: 16 }}>
+                <Typography variant="h6" sx={{ fontSize: 16, fontWeight: 500, color: '#7B818A' }}>
                   Hardware targets
                 </Typography>
               </Grid>
@@ -70,11 +70,9 @@ const HardwareBuilder = () => {
                 {values.map((value, ix) => {
                   const { provider, instance, cpu, memory } = value;
 
-                  // formik array helpers + material is significant work to compose.
-                  // I'm opting not to use formik Field components here at the cost of auto-wiring state
-                  // const errors = form.errors.hardware ? (form.errors.hardware as any)[ix] : {};
-                  // const touched = form.touched.hardware ? (form.touched.hardware as any)[ix] : {};
-                  // console.log(errors, touched);
+                  // formik array helpers atuo wiring giving me grief, so going manual brute force
+                  const errors = form.errors.hardware ? (form.errors.hardware as any)[ix] : {};
+                  const touched = form.touched.hardware ? (form.touched.hardware as any)[ix] : {};
 
                   return (
                     <TableRow key={ix}>
@@ -82,8 +80,8 @@ const HardwareBuilder = () => {
                         <ProviderSelect
                           value={provider}
                           size="small"
-                          // error={touched?.provider && Boolean(errors?.provider)}
-                          // onBlur={() => form.setFieldTouched(`${name}.${ix}.provider`, true)}
+                          error={touched?.provider && Boolean(errors?.provider)}
+                          onBlur={() => form.setFieldTouched(`hardware.${ix}.provider`, true)}
                           onChange={(event: React.SyntheticEvent, provider: string) => {
                             replace(ix, { ...defaultHardware, provider });
                           }}
@@ -95,8 +93,8 @@ const HardwareBuilder = () => {
                           size="small"
                           provider={provider}
                           disabled={!provider}
-                          // error={touched?.instance && Boolean(errors?.instance)}
-                          // onBlur={() => form.setFieldTouched(`${name}.${ix}.instance`, true)}
+                          error={touched?.instance && Boolean(errors?.instance)}
+                          onBlur={() => form.setFieldTouched(`hardware.${ix}.instance`, true)}
                           onChange={(event: React.SyntheticEvent, instance: Instance) => {
                             replace(ix, { ...instance, provider });
                           }}

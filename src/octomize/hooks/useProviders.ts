@@ -1,8 +1,8 @@
 import hardwareConfig from '../hardware.yaml';
-import { Hardware } from '..';
+import { Instance } from '../schema';
 import { useQuery } from "react-query";
 
-const hardware = hardwareConfig as Hardware[];
+const hardware = hardwareConfig as Instance[];
 
 export const useProviders = () => {
   return useQuery<string[]>(['providers'], async () => {

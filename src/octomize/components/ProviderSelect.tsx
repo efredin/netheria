@@ -12,7 +12,6 @@ export interface ProviderSelectProps {
 
 const ProviderSelect = ({ error, onBlur, ...props }: ProviderSelectProps) => {
   const { data, isLoading } = useProviders();
-
   const providers = data || [];
 
   return (
@@ -20,7 +19,7 @@ const ProviderSelect = ({ error, onBlur, ...props }: ProviderSelectProps) => {
       {...props}
       loading={isLoading}
       options={providers}
-      getOptionLabel={option => option}
+      getOptionLabel={option => option || ''}
       onBlur={onBlur}
       renderInput={(params) => <TextField error={error} {...params} placeholder="Select Provider" /> }
     />

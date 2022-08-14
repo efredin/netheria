@@ -1,11 +1,12 @@
-import BenchmarkBuilder, { defaultBenchmark } from './BenchmarkBuilder';
+import AccelerateBuilder from './AccelerateBuilder';
+import BenchmarkBuilder from './BenchmarkBuilder';
 import HardwareBuilder, { defaultHardware } from './HardwareBuilder';
 import InstanceSelect from './InstanceSelect';
 import OctomizePage from './OctomizePage';
 import ProviderSelect from './ProviderSelect';
 
 export {
-  defaultBenchmark,
+  AccelerateBuilder,
   BenchmarkBuilder,
   defaultHardware,
   HardwareBuilder,
