@@ -1,5 +1,5 @@
 import React from 'react';
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, AutocompleteProps, TextField } from '@mui/material';
 import { useProviders } from '..';
 
 export interface ProviderSelectProps {
@@ -7,6 +7,7 @@ export interface ProviderSelectProps {
   error?: boolean;
   onBlur?: (event: React.SyntheticEvent) => void;
   onChange: (event: React.SyntheticEvent, value: string | null) => void;
+  size?: 'small' | 'medium';
 }
 
 const ProviderSelect = ({ error, onBlur, ...props }: ProviderSelectProps) => {

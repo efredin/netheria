@@ -18,11 +18,11 @@ const StyledAccordion = styled(Accordion)(({ theme }) => `
 `);
 
 export interface OptionalFieldGroupProps extends React.PropsWithChildren {
-  label: string;
+  label: React.ReactNode;
   enabled: boolean;
   onEnabledChange: (event: React.SyntheticEvent, enabled: boolean) => void; 
   expanded: boolean;
-  onExpandedChange: (event: React.SyntheticEvent, expanded: boolean) => void; 
+  onExpandedChange: (event: React.SyntheticEvent, expanded: boolean) => void;
 }
 
 const OptionalFieldGroup = (props: OptionalFieldGroupProps) => {
@@ -39,7 +39,7 @@ const OptionalFieldGroup = (props: OptionalFieldGroupProps) => {
           label={label}
           control={
             <Checkbox
-              checked={enabled}
+              checked={enabled} 
               onChange={onEnabledChange}
             />
           }

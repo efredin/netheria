@@ -36,9 +36,9 @@ const HardwareBuilder = () => {
         const values: Instance[] = form.values.hardware;
         return (
           <Box>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{ mt: 8 }}>
               <Grid item xs={10}>
-                <Typography variant="h6" color="gray">
+                <Typography variant="h6" color="gray" sx={{ fontSize: 16 }}>
                   Hardware targets
                 </Typography>
               </Grid>
@@ -52,17 +52,21 @@ const HardwareBuilder = () => {
                 </Button>
               </Grid>
             </Grid>
-            <Table sx={{ mx: -2, width: 'auto' }}>
+            <Table sx={{ mx: -2, width: 'auto' }} size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ width: '30%', color: '#0180FF' }}>PROVIDER</TableCell>
-                  <TableCell sx={{ width: '30%' }}>INSTANCE</TableCell>
-                  <TableCell>VCPU</TableCell>
-                  <TableCell>MEMORY (GIB)</TableCell>
+                  <TableCell sx={{ width: '30%', fontSize: 10, color: '#0180FF' }}>PROVIDER</TableCell>
+                  <TableCell sx={{ width: '30%', fontSize: 10, color: '#7B818A' }}>INSTANCE</TableCell>
+                  <TableCell sx={{ fontSize: 10, color: '#7B818A' }}>VCPU</TableCell>
+                  <TableCell sx={{ fontSize: 10, color: '#7B818A' }}>MEMORY (GIB)</TableCell>
                   <TableCell sx={{ width: '40px' }}></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
+                <TableRow>
+                  {/* Spacer row */}
+                  <TableCell colSpan={5} sx={{ border: 0, fontSize: 8 }}>&nbsp;</TableCell>
+                </TableRow>
                 {values.map((value, ix) => {
                   const { provider, instance, cpu, memory } = value;
 
@@ -74,9 +78,10 @@ const HardwareBuilder = () => {
 
                   return (
                     <TableRow key={ix}>
-                      <TableCell>
+                      <TableCell sx={{ border: 0 }}>
                         <ProviderSelect
                           value={provider}
+                          size="small"
                           // error={touched?.provider && Boolean(errors?.provider)}
                           // onBlur={() => form.setFieldTouched(`${name}.${ix}.provider`, true)}
                           onChange={(event: React.SyntheticEvent, provider: string) => {
@@ -84,9 +89,10 @@ const HardwareBuilder = () => {
                           }}
                         />
                       </TableCell>
-                      <TableCell>
+                      <TableCell sx={{ border: 0 }}>
                         <InstanceSelect
                           value={values[ix]}
+                          size="small"
                           provider={provider}
                           disabled={!provider}
                           // error={touched?.instance && Boolean(errors?.instance)}
@@ -96,13 +102,13 @@ const HardwareBuilder = () => {
                           }}
                         />
                       </TableCell>
-                      <TableCell>
-                        <ReadOnlyField value={cpu} disabled={!cpu} />
+                      <TableCell sx={{ border: 0 }}>
+                        <ReadOnlyField value={cpu} disabled={!cpu} size="small" />
                       </TableCell>
-                      <TableCell>
-                        <ReadOnlyField value={memory} disabled={!memory} />
+                      <TableCell sx={{ border: 0 }}>
+                        <ReadOnlyField value={memory} disabled={!memory} size="small" />
                       </TableCell>
-                      <TableCell>
+                      <TableCell sx={{ border: 0 }}>
                         <IconButton onClick={() => remove(ix)}>
                           <Close />
                         </IconButton>

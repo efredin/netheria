@@ -15,8 +15,8 @@ export enum Engine {
 
 export const benchmarkSchema = object({
   engine: string().oneOf(Object.values(Engine)),
-  num_trials: number().min(0).default(1),
-  runs_per_trial: number().min(0).default(1)
+  num_trials: number().min(1).default(1),
+  runs_per_trial: number().min(1).default(1)
 });
 
 export const accelerateSchema = object({

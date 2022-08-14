@@ -9,6 +9,7 @@ export interface InstanceSelectProps {
   error?: boolean;
   onBlur?: (event: React.SyntheticEvent) => void;
   onChange: (event: React.SyntheticEvent, value: Instance | null) => void;
+  size?: 'small' | 'medium';
 }
 
 const InstanceSelect = ({ error, onBlur, ...props }: InstanceSelectProps) => {

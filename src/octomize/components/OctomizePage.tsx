@@ -3,18 +3,18 @@ import { LoadingButton } from '@mui/lab';
 import React, { useState } from 'React';
 import { Page } from '../../layout';
 import { Octomize, octomizeSchema } from '..';
-import { defaultHardware, defaultBenchmark, HardwareBuilder, BenchmarkBuilder } from '.';
-import { Formik, Form, FieldArray, Field } from 'formik';
-import { toFormikValidationSchema } from 'zod-formik-adapter';
+import { Engine } from '../schema';
+import { defaultHardware, HardwareBuilder, BenchmarkBuilder } from '.';
+import { Formik, Form } from 'formik';
 import { DeepNullable } from '../../types/Nullable';
 
 const initialValues: DeepNullable<Octomize> = {
   hardware: [{ ...defaultHardware }],
-  // benchmark: {
-  //   // engine: Engine.TVM,
-  //   num_trials: 1,
-  //   runs_per_trial: 1
-  // },
+  benchmark: {
+    engine: Engine.TVM,
+    num_trials: 1,
+    runs_per_trial: 1
+  },
   // accelerate: { engine: Engine.TVM } // todo
 };
 
