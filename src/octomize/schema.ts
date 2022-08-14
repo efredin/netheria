@@ -9,7 +9,7 @@ export const instanceSchema = object({
 });
 
 export enum Engine {
-  ONNX = 'ONYX',
+  ONNX = 'ONNX',
   TVM = 'TVM'
 }
 
