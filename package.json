@@ -6,6 +6,9 @@
   "author": "Eric <efredin@gmail.com>",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": ">=14"
+  },
   "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "build": "parcel build src/index.html",

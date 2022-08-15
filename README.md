@@ -2,6 +2,8 @@
 ![Screenshot](src/images/screenshot.png)
 
 ## Getting Started
+Requires node `>=14`
+
 Install dependencies
 ```sh
 yarn
